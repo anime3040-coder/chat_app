@@ -33,18 +33,18 @@ def run_chat():
         any_reader = participant.find_datareader("ChatSubscriber::ChatReader")
 
         if not any_writer or not any_reader:
-            print("❌ خطأ: لم يتم العثور على writer أو reader.")
+            print("Error: Writer or Reader components not found")
             return
 
         writer = dds.DynamicData.DataWriter(any_writer)
         reader = dds.DynamicData.DataReader(any_reader)
 
         print(f"Domain ID: {participant.domain_id}")
-        print("--- ✅ Chat is LIVE! ---")
+        print("--- Chat is LIVE! ---")
 
         user_name = input("Enter your name: ")
 
-        # 🔹 Start thread to continuously read messages
+        #  Start thread to continuously read messages
         threading.Thread(target=read_messages, args=(reader, user_name), daemon=True).start()
 
         while True:
