@@ -15,12 +15,12 @@ def read_messages(reader, user_name):
                 sender = s.data["sender"]
                 message = s.data["message"]
                 if sender != user_name:
-                    print(f"\n📩 {sender}: {message}")
+                    print(f"\n {sender}: {message}")
         time.sleep(0.2)
 
 def run_chat():
     try:
-        print("--- 🚀 Starting Chat App ---")
+        print("--- Starting Chat App ---")
 
         xml_path = os.path.join(current_dir, "MyChatConfig.xml")
         provider = dds.QosProvider(xml_path)
@@ -58,7 +58,7 @@ def run_chat():
             writer.write(sample)
 
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")
 
 if __name__ == "__main__":
     run_chat()
