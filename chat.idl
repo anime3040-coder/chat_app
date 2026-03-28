@@ -1,0 +1,5 @@
+
+struct ChatMessage{
+    string sender;
+    string msg;
+};

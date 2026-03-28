@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <types>
+        <struct name="ChatMessage">
+            <member name="sender" type="string"/>
+            <member name="message" type="string"/>
+        </struct>
+    </types>
+
+    <qos_library name="ChatLibrary">
+        <qos_profile name="ChatProfile" is_default_qos="true">
+            <datareader_qos>
+                <durability>
+                    <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+                </durability>
+                <reliability>
+                    <kind>RELIABLE_RELIABILITY_QOS</kind>
+                </reliability>
+                <history>
+                    <kind>KEEP_LAST_HISTORY_QOS</kind>
+                    <depth>50</depth>
+                </history>
+            </datareader_qos>
+            <datawriter_qos>
+                <durability>
+                    <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+                </durability>
+                <reliability>
+                    <kind>RELIABLE_RELIABILITY_QOS</kind>
+                </reliability>
+            </datawriter_qos>
+        </qos_profile>
+    </qos_library>
+
+    <domain_library name="ChatDomainLibrary">
+        <domain name="ChatDomain" domain_id="0">
+            <register_type name="ChatMessage" type_ref="ChatMessage" />
+            <topic name="ChatTopic" register_type_ref="ChatMessage" />
+        </domain>
+    </domain_library>
+
+    <participant_library name="ChatParticipantLibrary">
+        <domain_participant name="ChatParticipant" domain_ref="ChatDomainLibrary::ChatDomain">
+            <publisher name="ChatPublisher">
+                <data_writer name="ChatWriter" topic_ref="ChatTopic" />
+            </publisher>
+            <subscriber name="ChatSubscriber">
+                <data_reader name="ChatReader" topic_ref="ChatTopic" />
+            </subscriber>
+        </domain_participant>
+    </participant_library>
+</dds>
